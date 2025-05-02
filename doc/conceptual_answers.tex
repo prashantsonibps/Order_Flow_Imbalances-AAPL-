@@ -1,0 +1,58 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{geometry}
+\usepackage{enumitem}
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\title{Order Flow Imbalance (OFI) Analysis: Conceptual Questions}
+\author{Prashant Soni}
+\date{May 2, 2025}
+\maketitle
+
+\section{Introduction}
+This report discusses the conceptual questions pertaining to the Order Flow Imbalance (OFI) assignment, presenting elaborate explanations backed by theoretical understanding and practical considerations.
+
+\section{Conceptual Questions}
+
+\subsection{Motivation Behind Measuring OFI at Multiple Depth Levels}
+Measuring OFI at various depth levels of the limit order book (LOB) is motivated by the desire to capture a fuller picture of market dynamics and liquidity provision. The best bid and ask (level 0) reflect immediate trading intentions, but deeper levels (e.g., levels 1--9) convey more information about latent demand and supply. Key motivations are:
+
+\begin{itemize}
+    \item \textbf{Robustness to Noise}: The top level is very sensitive to small orders or cancellations, which may not reflect true market sentiment. Averaging OFI across multiple levels smooths out noise and captures broader order flow trends.
+    \item \textbf{Liquidity Dynamics}: Deeper levels indicate the depth of liquidity in the market. Large cancellations or additions of orders at these levels can be an indication of large institutional activity or a shift in market expectations.
+    \item \textbf{Predictive Power}: Multi-level OFI has more predictive power for price movement, as it incorporates the cumulative effect of order flow across the book. For example, a large cancellation at level 2 can foreshadow a price drop if the best bid weakens.
+    \item \textbf{Strategic Trading}: Market makers and high-frequency traders monitor deeper levels to front-run price effects of large orders. Multi-level OFI is helpful for modeling these strategic interactions.
+\end{itemize}
+
+With multiple levels, OFI is a better measure of market pressure and price effect, and hence more helpful for trading algorithms and risk management.
+
+\subsection{Why Lasso Regression for Cross-Impact Estimation?}
+Authors of the paper contemplated using Lasso regression instead of Ordinary Least Squares (OLS) in estimating cross-impact coefficients due to the following reasons:
+
+\begin{itemize}
+    \item \textbf{Sparsity}: In cross-impact models, the price of an asset may be influenced by the OFI of only a subset of assets. Lasso regression, by utilizing L1 regularization, promotes sparsity by shriving irrelevant coefficients to zero, resulting in an easily interpretable and parsimonious model.
+    \item \textbf{Prevention of Overfitting}: With high-frequency data and potentially many assets, OLS can overfit by putting non-zero weights on noise-induced relationships. Lasso's regularization remedies this by penalizing large coefficients, improving out-of-sample performance.
+    \item \textbf{Feature Selection}: Lasso automatically performs feature selection, identifying the most significant assets that contribute to cross-impact. This is necessary in high-dimensional settings where manual selection is not possible.
+    \item \textbf{Robustness to Collinearity}: Financial data, e.g., OFI for correlated assets, often suffers from multicollinearity. Lasso is less susceptible to this than OLS by selecting one representative variable out of a group of correlated predictors.
+\end{itemize}
+
+Briefly, Lasso regression is preferred due to its ability to produce sparse, robust, and interpretable cross-impact models, which are important for practical use in trading and market microstructure research.
+
+\subsection{Why is OFI a Better Predictor of Short-Term Returns Than Trade Volume?}
+OFI is a better predictor of short-term returns than trade volume due to its ability to capture directional market pressure and combine aggressive and passive order flow. The reasons include:
+
+\begin{itemize}
+    \item \textbf{Directional Information}: OFI is a signed measure that distinguishes between buying pressure and selling pressure (positive OFI indicates net buying, negative indicates net selling). Trade volume, however, is unsigned and does not indicate the direction of market impact.
+    \item \textbf{Incorporation of Limit Orders}: OFI incorporates both executed trades and dynamics in the limit order book (additions and cancellations). Limit order book dynamics naturally tend to precede price movement, as they capture latent supply and demand. Trade volume captures only executed trades, leaving out this anticipatory information.
+    \item \textbf{Sensitivity to Market Microstructure}: OFI is sensitive to microstructural events, i.e., aggressive market orders or large cancellations, which foreshadow price changes. Trade volume aggregates all trades without distinguishing their impact on the order book.
+    \item \textbf{Empirical Evidence}: Studies, such as Cont et al. (2014), show that OFI is more associated with short-term price movement and more so than trade volume as it can better capture the imbalance between demand and supply at the best quotes.
+\end{itemize}
+
+Merging information from trades and the order book, OFI provides a more informative and predictive measure of short-term price movement and is therefore a valuable tool for traders and researchers.
+
+\section{Conclusion}
+Construction of OFI features and analysis of their properties provide main insights into market dynamics. Through discussion of motivation for multi-level OFI, the motivation for Lasso regression, and the advantage of OFI over trade volume, we demonstrate a clear understanding of order flow dynamics and their impact on financial markets.
+
+\end{document}
