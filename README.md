@@ -12,11 +12,11 @@ Here’s how the repo is organized:
 - `output/`: Stores the computed OFI data (`ofi_features.csv`) and visualization files (PNG plots: `ofi_time_series.png`, `ofi_returns_scatter.png`, `ofi_distribution.png`).
 - `doc/`: Includes my LaTeX report (`conceptual_answers.tex`) and the compiled PDF (`conceptual_answers.pdf`) for the conceptual questions.
 - `README.md`: This file, giving you the full scoop on the project!
-- `requirements.txt`: Lists the Python libraries needed to run the notebook.
+
 
 ## How to Run the Code
 Getting this project up and running is a breeze. Here’s what to do:
 
 1. **Clone the Repository**:
    ```bash
-   
+   git clone gh repo clone prashantsonibps/Order_Flow_Imbalances-AAPL-
